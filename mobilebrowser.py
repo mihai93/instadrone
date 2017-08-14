@@ -24,13 +24,17 @@ class MobileBrowser():
 		# Select which device you want to emulate by uncommenting it
 		# More information at: https://sites.google.com/a/chromium.org/chromedriver/mobile-emulation
 		mobile_emulation = { 
-			"deviceName": "Apple iPhone 6 Plus"
+			"deviceName": "Apple iPhone 5"
+			# "deviceName": "Nexus 5"
 			# "deviceMetrics": { "width": 360, "height": 640, "pixelRatio": 3.0 },
 		    # "userAgent": "Mozilla/5.0 (Linux; Android 4.2.1; en-us; Nexus 5 Build/JOP40D) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/18.0.1025.166 Mobile Safari/535.19"
 		}
 		
 		# Define a variable to hold all the configurations we want
 		chrome_options = webdriver.ChromeOptions()
+		chrome_options.add_argument('--dns-prefetch-disable')
+		chrome_options.add_argument('--no-sandbox')
+		chrome_options.add_argument('--lang=en-US')
 		
 		# Add the mobile emulation to the chrome options variable
 		chrome_options.add_experimental_option("mobileEmulation", mobile_emulation)
