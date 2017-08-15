@@ -12,6 +12,9 @@ import sys
 from datetime import datetime
 from apscheduler.schedulers.blocking import BlockingScheduler
 
+# defines whether to use test or actual login
+TEST_MODE = False
+
 class InstaDrone:
 
 	def __init__(self):
@@ -30,14 +33,23 @@ class InstaDrone:
 		loginButton = self.driver.find_element_by_link_text('Log in')
 		loginButton.click()
 
+		# enter username
 		usernameField = self.driver.find_element_by_xpath("//input[@name='username']")
-		usernameField.send_keys('boutiquecannabiscanada')
-		# usernameField.send_keys('charleyjest1')
 
+		if TEST_MODE:
+			usernameField.send_keys('charleyjest1')
+		else:
+			usernameField.send_keys('boutiquecannabiscanada')
+
+		# enter password
 		passwordField = self.driver.find_element_by_xpath("//input[@name='password']")
-		passwordField.send_keys('mng9ui3w')
-		# passwordField.send_keys('test123')
 
+		if TEST_MODE:
+			passwordField.send_keys('test123')
+		else:
+			passwordField.send_keys('mng9ui3w')
+
+		#click login button
 		loginButton = self.driver.find_element_by_xpath("//button[text()='Log in']")
 		loginButton.click()
 
@@ -64,10 +76,8 @@ class InstaDrone:
 		captionXPath = '//textarea[contains(@placeholder, "Write a caption")]'
 		self.wait.until(lambda driver: self.driver.find_element_by_xpath(captionXPath))
 		captionArea = self.driver.find_element_by_xpath(captionXPath)
-		#convert to unicode
-		# text = "28 GRAM GIVEAWAY 🔥 🍯  💎 💯\nCOMING UP ON AUGUST 28TH #28gOnThe28th\n14g Shatter 🍯  🐝  and 14g CBD Crystalline 💎 💎  💯\nKeep your 👀  peeled cause we're going to be posting a series of photos and they'll be a new chance to enter with every post!\n👇  EACH THING BELOW COUNTS FOR AT LEAST 1 ENTRY 👇\n1️⃣. Repost this picture\n2️⃣. In the repost, write @boutiquecannabiscanada and @boutiquecannabisofficial and caption the tag #28gOnThe28th\n3️⃣. In the repost, tag any and all friends you'd smoke this with (1 tag equals 1 entry, no duplicate tags)\n4️⃣. On this picture, comment below and tag friends you'd smoke it with (again no duplicates)\n6️⃣. DM us pictures/video you'd like us to repost to this page, we love original content 🔥 🔥"
 	
-
+		# convert to unicode
 		# text = text.replace("'", "\\'")  # escape single quotes
 		text = text.encode('utf-8')  # needed to make format function work
 		captionArea.click()
@@ -85,8 +95,9 @@ class InstaDrone:
 		profileButton = self.driver.find_element_by_xpath(profileXPath)
 		profileButton.click()
 
-		self.wait.until(lambda driver: self.driver.find_element_by_xpath("//*[contains(text(), ' posts')]"))
-		postsElement = self.driver.find_element_by_xpath('//*[@id="react-root"]/section/main/article/div[2]/div[1]/div[1]/div[1]/a/div/div[2]')
+		mostRecentPostXPath = '//*[@id="react-root"]/section/main/article/div[2]/div[1]/div[1]/div[1]/a/div/div[2]'
+		self.wait.until(lambda driver: self.driver.find_element_by_xpath(mostRecentPostXPath))
+		postsElement = self.driver.find_element_by_xpath(mostRecentPostXPath)
 		postsElement.click()
 		
 		commentXPath = "//span[contains(@class, 'Comment')]"
