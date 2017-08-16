@@ -5,6 +5,7 @@ from mobilebrowser import MobileBrowser
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.action_chains import ActionChains
+from selenium.common.exceptions import NoSuchElementException        
 from selenium.webdriver.common.keys import Keys
 import pyautogui
 import emoji
@@ -67,51 +68,64 @@ class InstaDrone:
 		pyautogui.keyDown('enter')
 		pyautogui.keyUp('enter')
 
-		expandXPath = "//span[contains(@class, 'Expand')]"
-		self.wait.until(lambda driver: self.driver.find_element_by_xpath(expandXPath))
-		expandButton = self.driver.find_element_by_xpath(expandXPath)
-		expandButton.click()
-
-		# click next btn
+		# wait until file is uploaded before continuing
 		nextXPath = "//button[text()='Next']"
 		self.wait.until(lambda driver: self.driver.find_element_by_xpath(nextXPath))
+
+		# if image is not square, expand view to view entire image
+		expandXPath = "//span[contains(@class, 'Expand')]"
+		expandButton = self.driver.find_elements_by_xpath(expandXPath)
+		if expandButton:
+			expandButton[0].click()
+
+		# click next button
 		nextButton = self.driver.find_element_by_xpath(nextXPath)
 		nextButton.click()
 
+		# enter caption
 		captionXPath = '//textarea[contains(@placeholder, "Write a caption")]'
 		self.wait.until(lambda driver: self.driver.find_element_by_xpath(captionXPath))
 		captionArea = self.driver.find_element_by_xpath(captionXPath)
 	
 		# convert to unicode
 		# text = text.replace("'", "\\'")  # escape single quotes
-		text = text.encode('utf-8')  # needed to make format function work
+		caption = caption.encode('utf-8')  # needed to make format function work
 		captionArea.click()
 		time.sleep(1)
-		self.driver.execute_script("arguments[0].value = arguments[1]", captionArea, text)
+		self.driver.execute_script("arguments[0].value = arguments[1]", captionArea, caption)
 		pyautogui.typewrite(' ')
 		time.sleep(1)
 
-		shareButton = self.driver.find_element_by_xpath("//button[text()='Share']")
+		# share file
+		shareXPath = "//button[text()='Share']"
+		self.wait.until(lambda driver: self.driver.find_element_by_xpath(shareXPath))
+		shareButton = self.driver.find_element_by_xpath(shareXPath)
 		shareButton.click()
 
 	def commentPost(self, comment):
+		# go to Profile
 		profileXPath = "//div[contains(@class, 'Profile')]"
 		self.wait.until(lambda driver: self.driver.find_element_by_xpath(profileXPath))
 		profileButton = self.driver.find_element_by_xpath(profileXPath)
 		profileButton.click()
 
+		# get most recent post
 		mostRecentPostXPath = '//*[@id="react-root"]/section/main/article/div[2]/div[1]/div[1]/div[1]/a/div/div[2]'
 		self.wait.until(lambda driver: self.driver.find_element_by_xpath(mostRecentPostXPath))
 		postsElement = self.driver.find_element_by_xpath(mostRecentPostXPath)
 		postsElement.click()
 		
+		# enter comment
 		commentXPath = "//span[contains(@class, 'Comment')]"
 		self.wait.until(lambda driver: self.driver.find_element_by_xpath(commentXPath))
 		commentBtn = self.driver.find_element_by_xpath(commentXPath)
+		self.driver.execute_script("arguments[0].scrollIntoView()", commentBtn)
 		commentBtn.click()
 
 		commentAreaXPath = '//textarea[contains(@placeholder, "Add a comment")]'
+		self.wait.until(lambda driver: self.driver.find_element_by_xpath(commentAreaXPath))
 		commentArea = self.driver.find_element_by_xpath(commentAreaXPath)
+		self.driver.execute_script("arguments[0].scrollIntoView()", commentArea)
 		# commentArea.send_keys(comment)
 
 		comment = comment.encode('utf-8')  # needed to make format function work
@@ -153,9 +167,9 @@ if __name__ == "__main__":
 	# drone = InstaDrone()
 	# drone.login()
 	# drone.post(fileName[2], caption[1])
-	# drone.commentPost(comment)
+	# drone.commentPost(comment[1])
     # drone.halt()
 
-	sched.add_job(my_job, 'date', run_date='2017-08-15 14:00:00', kwargs={'fileName': fileName[0], 'caption': caption[0], 'comment': comment[0]})
-	sched.add_job(my_job, 'date', run_date='2017-08-15 15:55:00', kwargs={'fileName': fileName[2], 'caption': caption[2], 'comment': comment[1]})
-	sched.start()
+	# sched.add_job(my_job, 'date', run_date='2017-08-15 14:28:25', kwargs={'fileName': fileName[0], 'caption': caption[0], 'comment': comment[0]})
+	# sched.add_job(my_job, 'date', run_date='2017-08-15 16:54:00', kwargs={'fileName': fileName[2], 'caption': caption[2], 'comment': comment[1]})
+	# sched.start()
