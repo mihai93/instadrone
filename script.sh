@@ -5,7 +5,27 @@
 echo "Install the packages..."
 #=========================================================
 sudo apt-get update
-sudo apt-get -y install fluxbox xorg unzip vim default-jre rungetty firefox
+sudo apt-get -y install fluxbox xorg unzip vim default-jre rungetty firefox python-pip python-dev build-essential libffi-dev libssl-dev python3-pip
+sudo -s -H pip install selenium requests pyopenssl ndg-httpsclient pyasn1 
+sudo -s -H pip install --upgrade pyopenssl ndg-httpsclient pyasn1 pip
+sudo apt-get -y install python-dev && apt-get install build-essential
+sudo -s -H pip install --upgrade setuptools
+sudo -s -H pip install ez_setup
+sudo -s -H easy_install -U setuptools
+sudo -s -H pip3 install python3-xlib
+sudo apt-get -y install scrot
+sudo apt-get -y install python3-tk
+sudo apt-get -y install python3-dev
+sudo -s -H pip install Image
+sudo -s -H pip install python-xlib
+sudo apt-get -y install libjpeg-dev
+sudo apt-get -y install zlib1g-dev
+sudo apt-get -y install libpng-dev
+sudo -s -H pip install pillow
+sudo -s -H pip install svn+https://svn.code.sf.net/p/python-xlib/code/trunk/
+sudo -s -H pip install apscheduler
+sudo ln -s /vagrant/chromedriver /usr/bin/chromedriver
+# sudo -s -H pip install pyautogui
 
 #=========================================================
 echo "Set autologin for the Vagrant user..."

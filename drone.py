@@ -211,13 +211,13 @@ if __name__ == "__main__":
 	giveawayPost.fileName = '28GramGiveaway.jpg'
 	giveawayPost.caption = 	"28 GRAM GIVEAWAY 🍯 💎 ❤️\nONLY 300 CONTESTANTS SO FAR! EVERY POST IS A NEW CHANCE TO WIN!\nCOMING UP ON AUGUST 28TH #28gOnThe28th\nPRIZE 👉 14g Shatter 🍯🐝 and 14g CBD Crystalline 💎💎 👇  CONTEST RULES (MUST complete all three )👇\n1️⃣. FOLLOW @boutiquecannabiscanada 👀 \n2️⃣. REPOST this picture, make sure to tag us \n3️⃣. LIKE & COMMENT below, tag friends you'd smoke with 💨\nMore friends you tag, the better your chances of winning 😀\nDM us anything to repost, we love original content 👌\nWith ❤️ from @boutiquecannabiscanada 👀"
 	giveawayPost.comment = 	"\n•\n•\n•\n•\n•\n#cbd #shatter #cbdcrystalline #giveaway #giveaways #follow #like #love #highlife #canadian #cannabis #dispensary #dabs #rosin #weed #weedporn #cannabiscommunity #pot #cloudsovercanada #710society #420 #710 #stonernation #hightimes #ganja #bakedinbc #terps #thc #710life"
-	giveawayPost.scheduledTime = '2017-08-22 12:18:00' # format: '2017-08-19 20:16:40'
+	# giveawayPost.scheduledTime = '2017-08-22 12:18:00' # format: '2017-08-19 20:16:40'
 
 	budzForBreastsPost = Post("Budz for breasts")
 	budzForBreastsPost.fileName = 'BudzForBreasts.jpg'
 	budzForBreastsPost.caption = "September 2nd at @theplanetparadise is going to be an amazing evening 🎀 thank you to everyone who's contributing ❤️ @boutiquecannabiscanada 👀"
 	budzForBreastsPost.comment = "\n•\n•\n•\n•\n•\n#weedconvention #fundraiser #fuckcancer #cancer #highlife #canadian #cannabis #dispensary #dabs #chronnoisseurschoice #rosin #weed #weedporn #cannabiscommunity #pot #cloudsovercanada #710society #bud #budtenders #420 #710 #iloveweed #weedstagram #stonernation #hightimes #ganja #bakedinbc #maryjane #buds #giveaway"
-	# budzForBreastsPost.scheduledTime = '2017-08-20 17:20:30'
+	budzForBreastsPost.scheduledTime = '2017-08-22 14:15:30'
 
 	firstGirlPost = Post("First girl post")
 	firstGirlPost.fileName = 'girl1.jpg'
