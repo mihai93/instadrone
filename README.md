@@ -13,5 +13,5 @@ sudo -s -H pyautogui
 vagrant plugin install vagrant-vbguest
 vagrant vbguest --do install
 vagrant reload
-vagrant vbguest --status <b>-> should be ok</b>
+vagrant vbguest --status -> should be ok
 ```
