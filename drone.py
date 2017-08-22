@@ -17,7 +17,7 @@ import os
 import sys
 
 # defines whether to use test or actual login
-TEST_MODE = False
+TEST_MODE = True
 
 class InstaDrone:
 
@@ -211,7 +211,7 @@ if __name__ == "__main__":
 	giveawayPost.fileName = '28GramGiveaway.jpg'
 	giveawayPost.caption = 	"28 GRAM GIVEAWAY 🍯 💎 ❤️\nONLY 300 CONTESTANTS SO FAR! EVERY POST IS A NEW CHANCE TO WIN!\nCOMING UP ON AUGUST 28TH #28gOnThe28th\nPRIZE 👉 14g Shatter 🍯🐝 and 14g CBD Crystalline 💎💎 👇  CONTEST RULES (MUST complete all three )👇\n1️⃣. FOLLOW @boutiquecannabiscanada 👀 \n2️⃣. REPOST this picture, make sure to tag us \n3️⃣. LIKE & COMMENT below, tag friends you'd smoke with 💨\nMore friends you tag, the better your chances of winning 😀\nDM us anything to repost, we love original content 👌\nWith ❤️ from @boutiquecannabiscanada 👀"
 	giveawayPost.comment = 	"\n•\n•\n•\n•\n•\n#cbd #shatter #cbdcrystalline #giveaway #giveaways #follow #like #love #highlife #canadian #cannabis #dispensary #dabs #rosin #weed #weedporn #cannabiscommunity #pot #cloudsovercanada #710society #420 #710 #stonernation #hightimes #ganja #bakedinbc #terps #thc #710life"
-	giveawayPost.scheduledTime = '2017-08-22 10:15:30' # format: '2017-08-19 20:16:40'
+	giveawayPost.scheduledTime = '2017-08-22 12:18:00' # format: '2017-08-19 20:16:40'
 
 	budzForBreastsPost = Post("Budz for breasts")
 	budzForBreastsPost.fileName = 'BudzForBreasts.jpg'

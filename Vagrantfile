@@ -1,3 +1,8 @@
+required_plugins = %w( vagrant-vbguest vagrant-timezone )
+required_plugins.each do |plugin|
+    exec "vagrant plugin install #{plugin};vagrant #{ARGV.join(" ")}" unless Vagrant.has_plugin? plugin || ARGV[0] == 'plugin'
+end
+
 VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
@@ -10,5 +15,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.provider :virtualbox do |vb|
     vb.gui = true
+  end
+
+  if Vagrant.has_plugin?("vagrant-timezone")
+    config.timezone.value = "Canada/Pacific"
   end
 end
