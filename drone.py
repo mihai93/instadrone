@@ -164,19 +164,20 @@ class InstaDrone:
 		pyautogui.keyDown('enter')
 		pyautogui.keyUp('enter')
 
-		print('Successfully commented on post: ' + post.title + ' at time: ' + post.scheduledTime)
+		print('Successfully commented on post: ' + post.title)
 
 	def halt(self):
-		print('Autopost job complete')
+		print('Mobile browser tear down...')
 		sleep(3)
 		self.mobileBrowser.tearDown()
 
 def autopost(post=None):
     drone = InstaDrone()
     drone.login()
-    # drone.post(post)
-    drone.commentPost(post)
+    drone.post(post)
+    # drone.commentPost(post)
     drone.halt()
+    print('Successfully autoposted ' + post.title)
 
 posts = []
 
@@ -208,9 +209,9 @@ if __name__ == "__main__":
 
 	giveawayPost = Post("28 gram giveaway")
 	giveawayPost.fileName = '28GramGiveaway.jpg'
-	giveawayPost.caption = 	"28 GRAM GIVEAWAY 🍯 💎 ❤️\nEVERY POST IS A NEW CHANCE TO WIN!\nCOMING UP ON AUGUST 28TH #28gOnThe28th\nPRIZE 👉 14g Shatter 🍯🐝 and 14g CBD Crystalline 💎💎 👇  CONTEST RULES (MUST complete all three )👇\n1️⃣. FOLLOW @boutiquecannabiscanada 👀 \n2️⃣. REPOST this picture, make sure to tag us \n3️⃣. LIKE & COMMENT below, tag friends you'd smoke with 💨\nMore friends you tag, the better your chances of winning 😀\nDM us anything to repost, we love original content 👌\nWith ❤️ from @boutiquecannabiscanada 👀"
+	giveawayPost.caption = 	"28 GRAM GIVEAWAY 🍯 💎 ❤️\nONLY 300 CONTESTANTS SO FAR! EVERY POST IS A NEW CHANCE TO WIN!\nCOMING UP ON AUGUST 28TH #28gOnThe28th\nPRIZE 👉 14g Shatter 🍯🐝 and 14g CBD Crystalline 💎💎 👇  CONTEST RULES (MUST complete all three )👇\n1️⃣. FOLLOW @boutiquecannabiscanada 👀 \n2️⃣. REPOST this picture, make sure to tag us \n3️⃣. LIKE & COMMENT below, tag friends you'd smoke with 💨\nMore friends you tag, the better your chances of winning 😀\nDM us anything to repost, we love original content 👌\nWith ❤️ from @boutiquecannabiscanada 👀"
 	giveawayPost.comment = 	"\n•\n•\n•\n•\n•\n#cbd #shatter #cbdcrystalline #giveaway #giveaways #follow #like #love #highlife #canadian #cannabis #dispensary #dabs #rosin #weed #weedporn #cannabiscommunity #pot #cloudsovercanada #710society #420 #710 #stonernation #hightimes #ganja #bakedinbc #terps #thc #710life"
-	# giveawayPost.scheduledTime = '2017-08-20 10:12:50' # format: '2017-08-19 20:16:40'
+	giveawayPost.scheduledTime = '2017-08-22 10:15:30' # format: '2017-08-19 20:16:40'
 
 	budzForBreastsPost = Post("Budz for breasts")
 	budzForBreastsPost.fileName = 'BudzForBreasts.jpg'
@@ -226,7 +227,7 @@ if __name__ == "__main__":
 
 	genericPost = Post("generic")
 	genericPost.comment = "\n•\n•\n•\n•\n•\n#highlife #canadian #cannabis #dispensary #dabs #chronnoisseurschoice #rosin #weed #weedporn #cannabiscommunity #pot #cloudsovercanada #710society #bud #budtenders #420 #710 #iloveweed #weedstagram #stonernation #hightimes #ganja #bakedinbc #terps #thc #710life #maryjane #buds #shatter #420girls"
-	genericPost.scheduledTime = '2017-08-20 23:53:00'
+	# genericPost.scheduledTime = '2017-08-20 23:53:00'
 
 	# drone = InstaDrone()
 	# drone.login()
