@@ -24,7 +24,7 @@ sudo apt-get -y install libpng-dev
 sudo -s -H pip install pillow
 sudo -s -H pip install svn+https://svn.code.sf.net/p/python-xlib/code/trunk/
 sudo -s -H pip install apscheduler
-sudo ln -s /vagrant/chromedriver /usr/bin/chromedriver
+sudo ln -s /vagrant/setup/chromedriver /usr/bin/chromedriver
 # sudo -s -H pip install pyautogui
 
 #=========================================================

@@ -16,6 +16,8 @@ import logging
 import os
 import sys
 
+IMAGE_PATH = 'images'
+
 # defines whether to use test or actual login
 TEST_MODE = True
 
@@ -74,10 +76,16 @@ class InstaDrone:
 
 		sleep(randint(1,3))
 
+		# go to images folder
+		sleep(0.25)
+		pyautogui.typewrite(IMAGE_PATH)
+		sleep(0.25)
+		pyautogui.keyDown('enter')
+		pyautogui.keyUp('enter')
 		# select file in browser
-		sleep(0.5)
-		pyautogui.typewrite(post.fileName)
-		sleep(0.5)
+		sleep(0.25)
+		pyautogui.typewrite(post.image)
+		sleep(0.25)
 		pyautogui.keyDown('enter')
 		pyautogui.keyUp('enter')
 
@@ -185,11 +193,20 @@ class Post:
 	def __init__(self, title):
 		self.id = id(self)
 		self.title = title
-		self.fileName = None
+		self.image = None
 		self.caption = None
 		self.comment = None
 		self.scheduledTime = None
 		posts.append(self)
+
+	# def get_image(self, image):
+	# 	return self.image
+    #
+	# def set_image(self, image):
+	# 	self.image = IMAGE_PATH + image
+    #
+	# image = property(get_image, set_image)
+
 
 if __name__ == "__main__":
 	sched = BlockingScheduler()
@@ -202,25 +219,25 @@ if __name__ == "__main__":
 	]
 
 	guestWhatWednesdayPost = Post("Guess what wednesday")
-	guestWhatWednesdayPost.fileName = None
+	guestWhatWednesdayPost.image = None
 	guestWhatWednesdayPost.caption = "🤔🤔🤔 GUESS the STRAIN & TAG A FRIEND to WIN $100 store credit 🎁🎁🎁 drop by every week for our weekly #guesswhatwednesdays giveaway!! Shout out to @triscuit.farms Peep us @boutiquecannabiscanada 👀"
 	guestWhatWednesdayPost.comment = "\n•\n•\n•\n•\n•\n#guesswhatwednesday #bud #buds #giveaway #giveaways #follow #like #love #highlife #canadian #cannabis #dispensary #dabs #rosin #weed #weedporn #cannabiscommunity #pot #cloudsovercanada #710society #420 #710 #stonernation #hightimes #ganja #bakedinbc #terps #thc #710life"
 	guestWhatWednesdayPost.scheduledTime = None
 
 	giveawayPost = Post("28 gram giveaway")
-	giveawayPost.fileName = '28GramGiveaway.jpg'
+	giveawayPost.image = '28GramGiveaway.jpg'
 	giveawayPost.caption = 	"28 GRAM GIVEAWAY 🍯 💎 ❤️\nONLY 300 CONTESTANTS SO FAR! EVERY POST IS A NEW CHANCE TO WIN!\nCOMING UP ON AUGUST 28TH #28gOnThe28th\nPRIZE 👉 14g Shatter 🍯🐝 and 14g CBD Crystalline 💎💎 👇  CONTEST RULES (MUST complete all three )👇\n1️⃣. FOLLOW @boutiquecannabiscanada 👀 \n2️⃣. REPOST this picture, make sure to tag us \n3️⃣. LIKE & COMMENT below, tag friends you'd smoke with 💨\nMore friends you tag, the better your chances of winning 😀\nDM us anything to repost, we love original content 👌\nWith ❤️ from @boutiquecannabiscanada 👀"
 	giveawayPost.comment = 	"\n•\n•\n•\n•\n•\n#cbd #shatter #cbdcrystalline #giveaway #giveaways #follow #like #love #highlife #canadian #cannabis #dispensary #dabs #rosin #weed #weedporn #cannabiscommunity #pot #cloudsovercanada #710society #420 #710 #stonernation #hightimes #ganja #bakedinbc #terps #thc #710life"
 	# giveawayPost.scheduledTime = '2017-08-22 12:18:00' # format: '2017-08-19 20:16:40'
 
 	budzForBreastsPost = Post("Budz for breasts")
-	budzForBreastsPost.fileName = 'BudzForBreasts.jpg'
+	budzForBreastsPost.image = 'BudzForBreasts.jpg'
 	budzForBreastsPost.caption = "September 2nd at @theplanetparadise is going to be an amazing evening 🎀 thank you to everyone who's contributing ❤️ @boutiquecannabiscanada 👀"
 	budzForBreastsPost.comment = "\n•\n•\n•\n•\n•\n#weedconvention #fundraiser #fuckcancer #cancer #highlife #canadian #cannabis #dispensary #dabs #chronnoisseurschoice #rosin #weed #weedporn #cannabiscommunity #pot #cloudsovercanada #710society #bud #budtenders #420 #710 #iloveweed #weedstagram #stonernation #hightimes #ganja #bakedinbc #maryjane #buds #giveaway"
-	budzForBreastsPost.scheduledTime = '2017-08-22 14:15:30'
+	budzForBreastsPost.scheduledTime = '2017-08-23 01:03:30'
 
 	firstGirlPost = Post("First girl post")
-	firstGirlPost.fileName = 'girl1.jpg'
+	firstGirlPost.image = 'girl1.jpg'
 	firstGirlPost.caption = "👯Two is always better than one 😉 \nCanada's most alluring women, Boutique Cannabis Girls. \nCheck out: @boutiquecannabiscanada 👀 @boutiquecannabisofficial \nBoutique Cannabis girl: @kwbabyy \nShooter: @jasegraphics\nMUA: @swankmakeup"
 	firstGirlPost.comment = "\n•\n•\n•\n•\n•\n#boutiquecannabis #boutiquecannabisgirls #girls #model #girlswhosmokeweed #weedgirls #girlswithtattoos #cute #picoftheday #beautiful #photooftheday #instagood #fun #smile #pretty #follow #hot #instagramers #potd #eyes #beauty #fit #girlswholift #girlswhosquat #fitness #instafit #canadianbabes #canadiangirls #sexy #booty"
 	# firstGirlPost.scheduledTime = '2017-08-20 13:30:30'
@@ -231,8 +248,8 @@ if __name__ == "__main__":
 
 	# drone = InstaDrone()
 	# drone.login()
-	# drone.post(guestWhatWednesdayPost)
-	# drone.commentPost(guestWhatWednesdayPost)
+	# drone.post(budzForBreastsPost)
+	# drone.commentPost(budzForBreastsPost)
 	# drone.halt()
 
 	for post in posts:

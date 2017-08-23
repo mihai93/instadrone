@@ -2,6 +2,11 @@
 
 To run the drone, `python drone.py`
 
+To run from SSH, run the following command before,
+```
+export DISPLAY=:0.0
+```
+
 ## Dependencies
 All are set to download in script.sh except for pyautogui, run:
 ```bash

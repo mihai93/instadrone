@@ -40,7 +40,7 @@ class MobileBrowser():
 		chrome_options.add_experimental_option("mobileEmulation", mobile_emulation)
 		
 		# Create driver, pass it the path to the chromedriver file and the special configurations you want to run
-		self.driver = webdriver.Chrome(executable_path='chromedriver', chrome_options=chrome_options)
+		self.driver = webdriver.Chrome(executable_path='bin/chromedriver', chrome_options=chrome_options)
 
 	def getDriver(self):
 		return self.driver
