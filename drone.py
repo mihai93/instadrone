@@ -19,7 +19,7 @@ import sys
 IMAGE_PATH = 'images'
 
 # defines whether to use test or actual login
-TEST_MODE = True
+TEST_MODE = False
 
 class InstaDrone:
 
@@ -199,14 +199,6 @@ class Post:
 		self.scheduledTime = None
 		posts.append(self)
 
-	# def get_image(self, image):
-	# 	return self.image
-    #
-	# def set_image(self, image):
-	# 	self.image = IMAGE_PATH + image
-    #
-	# image = property(get_image, set_image)
-
 
 if __name__ == "__main__":
 	sched = BlockingScheduler()
@@ -219,10 +211,10 @@ if __name__ == "__main__":
 	]
 
 	guestWhatWednesdayPost = Post("Guess what wednesday")
-	guestWhatWednesdayPost.image = None
-	guestWhatWednesdayPost.caption = "🤔🤔🤔 GUESS the STRAIN & TAG A FRIEND to WIN $100 store credit 🎁🎁🎁 drop by every week for our weekly #guesswhatwednesdays giveaway!! Shout out to @triscuit.farms Peep us @boutiquecannabiscanada 👀"
+	guestWhatWednesdayPost.image = 'GWW-Aug23.jpg'
+	guestWhatWednesdayPost.caption = "🤔🤔🤔 SPECIAL WEEK! REPOST this picture and get a chance to WIN $100 store credit and as always... GUESS the STRAIN & TAG A FRIEND to WIN $100 store credit 🎁🎁🎁 drop by every week for our weekly #guesswhatwednesdays giveaway!! Peep us @boutiquecannabiscanada 👀"
 	guestWhatWednesdayPost.comment = "\n•\n•\n•\n•\n•\n#guesswhatwednesday #bud #buds #giveaway #giveaways #follow #like #love #highlife #canadian #cannabis #dispensary #dabs #rosin #weed #weedporn #cannabiscommunity #pot #cloudsovercanada #710society #420 #710 #stonernation #hightimes #ganja #bakedinbc #terps #thc #710life"
-	guestWhatWednesdayPost.scheduledTime = None
+	guestWhatWednesdayPost.scheduledTime = '2017-08-23 01:29:45'
 
 	giveawayPost = Post("28 gram giveaway")
 	giveawayPost.image = '28GramGiveaway.jpg'
@@ -234,7 +226,7 @@ if __name__ == "__main__":
 	budzForBreastsPost.image = 'BudzForBreasts.jpg'
 	budzForBreastsPost.caption = "September 2nd at @theplanetparadise is going to be an amazing evening 🎀 thank you to everyone who's contributing ❤️ @boutiquecannabiscanada 👀"
 	budzForBreastsPost.comment = "\n•\n•\n•\n•\n•\n#weedconvention #fundraiser #fuckcancer #cancer #highlife #canadian #cannabis #dispensary #dabs #chronnoisseurschoice #rosin #weed #weedporn #cannabiscommunity #pot #cloudsovercanada #710society #bud #budtenders #420 #710 #iloveweed #weedstagram #stonernation #hightimes #ganja #bakedinbc #maryjane #buds #giveaway"
-	budzForBreastsPost.scheduledTime = '2017-08-23 01:03:30'
+	# budzForBreastsPost.scheduledTime = '2017-08-23 01:03:30'
 
 	firstGirlPost = Post("First girl post")
 	firstGirlPost.image = 'girl1.jpg'
