@@ -20,7 +20,7 @@ from pymongo import MongoClient
 IMAGE_PATH = 'images'
 
 # defines whether to use test or actual login
-TEST_MODE = True
+TEST_MODE = False
 
 class InstaDrone:
     def __init__(self):
@@ -131,7 +131,7 @@ class InstaDrone:
 
         self.commentPost(post)
 
-        print('Successfully posted: ' + post.title + ' at time: ' + post.scheduledTime)
+        print('Successfully posted: ' + post.title)
 
     def commentPost(self, post):
         # go to Profile
