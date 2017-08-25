@@ -15,169 +15,43 @@ from time import sleep
 import logging
 import os
 import sys
+from pymongo import MongoClient
 
-IMAGE_PATH = 'images'
+from InstaDrone import InstaDrone
 
-# defines whether to use test or actual login
-TEST_MODE = False
+def createPosts():
+	guestWhatWednesdayPost = Post("Guess what wednesday")
+	guestWhatWednesdayPost.image = 'GWW-Aug23.jpg'
+	guestWhatWednesdayPost.caption = "🤔🤔🤔 SPECIAL WEEK! REPOST this picture and get a chance to WIN $100 store credit 	and as always... GUESS the STRAIN & TAG A FRIEND to WIN $100 store credit 🎁🎁🎁 drop by every week for our weekly #guesswhatwednesdays giveaway!! Peep us @boutiquecannabiscanada 👀"
+	guestWhatWednesdayPost.comment = "\n•\n•\n•\n•\n•\n#guesswhatwednesday #bud #buds #giveaway #giveaways #follow #like #love #highlife #canadian #cannabis #dispensary #dabs #rosin #weed #weedporn #cannabiscommunity #pot #cloudsovercanada #710society #420 #710 #stonernation #hightimes #ganja #bakedinbc #terps #thc #710life"
+	# guestWhatWednesdayPost.scheduledTime = '2017-08-23 01:29:45'
 
-class InstaDrone:
+	guessWhatWedWinnerPost = Post("Guess what winner")
+	guessWhatWedWinnerPost.image = 'GuessWhatWinnerAug23.jpg'
+	guessWhatWedWinnerPost.caption = "#GUESSWHATWEDNESDAY WINNER is @smoketogether_staytogether2213 ! 🎁🎁 She wins for doing a repost, unfortunately nobody guessed correctly, the strain was CBD Sunkiss.  👉 The other $100 will be given away next Wednesday, so the prize will be even larger! Come back next Wednesday 💯  ❤️ GIVEAWAY GOING ON! PRIZE 👉 14g Shatter 🍯🐝 and 14g CBD Crystalline 💎💎 Check out: @boutiquecannabiscanada 👀"
+	guessWhatWedWinnerPost.comment = "\n•\n•\n•\n•\n•\n#guesswhatwednesday #bud #buds #giveaway #giveaways #follow #like #love #highlife #canadian #cannabis #dispensary #dabs #rosin #weed #weedporn #cannabiscommunity #pot #cloudsovercanada #710society #420 #710 #stonernation #hightimes #ganja #bakedinbc #terps #thc #710life"
+	guessWhatWedWinnerPost.scheduledTime = None
 
-	def __init__(self):
-		if sys.version[0] == '2':
-		    reload(sys)
-		    sys.setdefaultencoding("utf-8")
+	giveawayPost = Post("28 gram giveaway")
+	giveawayPost.image = '28GramGiveaway.jpg'
+	giveawayPost.caption = "28 GRAM GIVEAWAY 🍯 💎 ❤️\nONLY 300 CONTESTANTS SO FAR! EVERY POST IS A NEW CHANCE TO WIN!\nCOMING UP ON AUGUST 28TH #28gOnThe28th\nPRIZE 👉 14g Shatter 🍯🐝 and 14g CBD Crystalline 💎💎 👇  CONTEST RULES (MUST complete all three )👇\n1️⃣. FOLLOW @boutiquecannabiscanada 👀 \n2️⃣. REPOST this picture, make sure to tag us \n3️⃣. LIKE & COMMENT below, tag friends you'd smoke with 💨\nMore friends you tag, the better your chances of winning 😀\nDM us anything to repost, we love original content 👌\nWith ❤️ from @boutiquecannabiscanada 👀"
+	giveawayPost.comment = "\n•\n•\n•\n•\n•\n#cbd #shatter #cbdcrystalline #giveaway #giveaways #follow #like #love #highlife #canadian #cannabis #dispensary #dabs #rosin #weed #weedporn #cannabiscommunity #pot #cloudsovercanada #710society #420 #710 #stonernation #hightimes #ganja #bakedinbc #terps #thc #710life"
+	giveawayPost.scheduledTime = '2017-08-23 22:46:10'  # format: '2017-08-19 20:16:40'
 
-		self.mobileBrowser = MobileBrowser()
-		self.mobileBrowser.setUp()
+	budzForBreastsPost = Post("Budz for breasts")
+	budzForBreastsPost.image = 'BudzForBreasts.jpg'
+	budzForBreastsPost.caption = "September 2nd at @theplanetparadise is going to be an amazing evening 🎀 thank you to everyone who's contributing ❤️ @boutiquecannabiscanada 👀"
+	budzForBreastsPost.comment = "\n•\n•\n•\n•\n•\n#weedconvention #fundraiser #fuckcancer #cancer #highlife #canadian #cannabis #dispensary #dabs #chronnoisseurschoice #rosin #weed #weedporn #cannabiscommunity #pot #cloudsovercanada #710society #bud #budtenders #420 #710 #iloveweed #weedstagram #stonernation #hightimes #ganja #bakedinbc #maryjane #buds #giveaway"
+	# budzForBreastsPost.scheduledTime = '2017-08-23 01:03:30'
 
-		self.driver = self.mobileBrowser.getDriver()
-		self.wait = WebDriverWait(self.driver,10)
+	firstGirlPost = Post("First girl post")
+	firstGirlPost.image = 'girl1.jpg'
+	firstGirlPost.caption = "👯Two is always better than one 😉 \nCanada's most alluring women, Boutique Cannabis Girls. \nCheck out: @boutiquecannabiscanada 👀 @boutiquecannabisofficial \nBoutique Cannabis girl: @kwbabyy \nShooter: @jasegraphics\nMUA: @swankmakeup"
+	firstGirlPost.comment = "\n•\n•\n•\n•\n•\n#boutiquecannabis #boutiquecannabisgirls #girls #model #girlswhosmokeweed #weedgirls #girlswithtattoos #cute #picoftheday #beautiful #photooftheday #instagood #fun #smile #pretty #follow #hot #instagramers #potd #eyes #beauty #fit #girlswholift #girlswhosquat #fitness #instafit #canadianbabes #canadiangirls #sexy #booty"
+	# firstGirlPost.scheduledTime = '2017-08-20 13:30:30'
 
-		logger = logging.getLogger()
-		logger.addHandler(logging.StreamHandler())
-
-	def login(self):
-		self.driver.get('https://www.instagram.com')
-
-		loginButton = self.driver.find_element_by_link_text('Log in')
-		loginButton.click()
-
-		# enter username
-		usernameField = self.driver.find_element_by_xpath("//input[@name='username']")
-
-		sleep(randint(1,3))
-
-		if TEST_MODE:
-			usernameField.send_keys('charleyjest1')
-		else:
-			usernameField.send_keys('boutiquecannabiscanada')
-
-		# enter password
-		passwordField = self.driver.find_element_by_xpath("//input[@name='password']")
-
-		sleep(randint(1,3))
-
-		if TEST_MODE:
-			passwordField.send_keys('test123')
-		else:
-			passwordField.send_keys('mng9ui3w')
-
-		#click login button
-		loginButton = self.driver.find_element_by_xpath("//button[text()='Log in']")
-		loginButton.click()
-
-	def post(self, post):
-		# click camera btn
-		cameraXPath = "//div[contains(@class, 'Camera')]"
-		self.wait.until(lambda driver: self.driver.find_element_by_xpath(cameraXPath))
-		cameraButton = self.driver.find_element_by_xpath(cameraXPath)
-		cameraButton.click()
-
-		sleep(randint(1,3))
-
-		# go to images folder
-		sleep(0.25)
-		pyautogui.typewrite(IMAGE_PATH)
-		sleep(0.25)
-		pyautogui.keyDown('enter')
-		pyautogui.keyUp('enter')
-		# select file in browser
-		sleep(0.25)
-		pyautogui.typewrite(post.image)
-		sleep(0.25)
-		pyautogui.keyDown('enter')
-		pyautogui.keyUp('enter')
-
-		sleep(randint(1,3))
-
-		# wait until file is uploaded before continuing
-		nextXPath = "//button[text()='Next']"
-		self.wait.until(lambda driver: self.driver.find_element_by_xpath(nextXPath))
-
-		# if image is not square, expand view to view entire image
-		expandXPath = "//span[contains(@class, 'Expand')]"
-		expandButton = self.driver.find_elements_by_xpath(expandXPath)
-		if expandButton:
-			expandButton[0].click()
-
-		# click next button
-		nextButton = self.driver.find_element_by_xpath(nextXPath)
-		nextButton.click()
-
-		sleep(randint(1,3))
-
-		# enter caption
-		captionXPath = '//textarea[contains(@placeholder, "Write a caption")]'
-		self.wait.until(lambda driver: self.driver.find_element_by_xpath(captionXPath))
-		captionArea = self.driver.find_element_by_xpath(captionXPath)
-	
-		# convert to unicode
-		# text = text.replace("'", "\\'")  # escape single quotes
-		caption = post.caption.encode('utf-8')  # needed to make format function work
-		captionArea.click()
-		sleep(1)
-		self.driver.execute_script("arguments[0].value = arguments[1]", captionArea, caption)
-		pyautogui.typewrite(' ')
-		sleep(1)
-
-		sleep(randint(1,3))
-
-		# share file
-		shareXPath = "//button[text()='Share']"
-		self.wait.until(lambda driver: self.driver.find_element_by_xpath(shareXPath))
-		shareButton = self.driver.find_element_by_xpath(shareXPath)
-		shareButton.click()
-
-		self.commentPost(post)
-
-		print('Successfully posted: ' + post.title + ' at time: ' + post.scheduledTime)
-
-	def commentPost(self, post):
-		# go to Profile
-		profileXPath = "//div[contains(@class, 'Profile')]"
-		self.wait.until(lambda driver: self.driver.find_element_by_xpath(profileXPath))
-		profileButton = self.driver.find_element_by_xpath(profileXPath)
-		profileButton.click()
-
-		sleep(randint(1,3))
-
-		# get most recent post
-		mostRecentPostXPath = '//*[@id="react-root"]/section/main/article/div[2]/div[1]/div[1]/div[1]/a/div/div[2]'
-		self.wait.until(lambda driver: self.driver.find_element_by_xpath(mostRecentPostXPath))
-		postsElement = self.driver.find_element_by_xpath(mostRecentPostXPath)
-		postsElement.click()
-
-		sleep(randint(1,3))
-		
-		# enter comment
-		commentXPath = "//span[contains(@class, 'Comment')]"
-		self.wait.until(lambda driver: self.driver.find_element_by_xpath(commentXPath))
-		commentBtn = self.driver.find_element_by_xpath(commentXPath)
-		self.driver.execute_script("arguments[0].scrollIntoView()", commentBtn)
-		commentBtn.click()
-
-		commentAreaXPath = '//textarea[contains(@placeholder, "Add a comment")]'
-		self.wait.until(lambda driver: self.driver.find_element_by_xpath(commentAreaXPath))
-		commentArea = self.driver.find_element_by_xpath(commentAreaXPath)
-		self.driver.execute_script("arguments[0].scrollIntoView()", commentArea)
-		# commentArea.send_keys(comment)
-
-		comment = post.comment.encode('utf-8')  # needed to make format function work
-		sleep(1)
-		self.driver.execute_script("arguments[0].value = arguments[1]", commentArea, comment)
-		pyautogui.typewrite(' ')
-		sleep(1)
-
-		pyautogui.keyDown('enter')
-		pyautogui.keyUp('enter')
-
-		print('Successfully commented on post: ' + post.title)
-
-	def halt(self):
-		print('Mobile browser tear down...')
-		sleep(3)
-		self.mobileBrowser.tearDown()
+	genericPost = Post("generic")
+	genericPost.comment = "\n•\n•\n•\n•\n•\n#highlife #canadian #cannabis #dispensary #dabs #chronnoisseurschoice #rosin #weed #weedporn #cannabiscommunity #pot #cloudsovercanada #710society #bud #budtenders #420 #710 #iloveweed #weedstagram #stonernation #hightimes #ganja #bakedinbc #terps #thc #710life #maryjane #buds #shatter #420girls"
 
 def autopost(post=None):
     drone = InstaDrone()
@@ -196,57 +70,28 @@ class Post:
 		self.image = None
 		self.caption = None
 		self.comment = None
+		self.postNow = False
 		self.scheduledTime = None
 		posts.append(self)
 
 
 if __name__ == "__main__":
-	sched = BlockingScheduler()
-	caption = [
-			"Canada's most alluring women, Boutique Cannabis Girls. \nCheck out: @boutiquecannabiscanada @boutiquecannabiscanada @boutiquecannabiscanada @boutiquecannabiscanada @boutiquecannabiscanada \nBoutique Cannabis girl: @kwbabyy @mzkaylzz @allthingsamandaa @j.desireexo @apriliciouss @marishika_ \nShooter: @jasegraphics\nMUA: @swankmakeup"
-	]
 	comment = [
 				"\n•\n•\n•\n•\n•\n#highlife #canadian #cannabis #dispensary #dabs #chronnoisseurschoice #rosin #weed #weedporn #cannabiscommunity #pot #cloudsovercanada #710society #bud #budtenders #420 #710 #iloveweed #weedstagram #stonernation #hightimes #ganja #bakedinbc #terps #thc #710life #maryjane #buds #shatter #420girls",
 				"\n•\n•\n•\n•\n•\n#boutiquecannabis #boutiquecannabisgirls #weedgirls #girlswhosmokeweed #follow4follow #love #girlswithtattoos #instagood #cute #photooftheday #tbt #followme #girl #beautiful #happy #picoftheday #instadaily #fitgirls #girlswholift #amazing #Sexy #fashion #igers #fun #summer #instalike #bestoftheday #smile #like4like #instamood"
 	]
 
-	guestWhatWednesdayPost = Post("Guess what wednesday")
-	guestWhatWednesdayPost.image = 'GWW-Aug23.jpg'
-	guestWhatWednesdayPost.caption = "🤔🤔🤔 SPECIAL WEEK! REPOST this picture and get a chance to WIN $100 store credit and as always... GUESS the STRAIN & TAG A FRIEND to WIN $100 store credit 🎁🎁🎁 drop by every week for our weekly #guesswhatwednesdays giveaway!! Peep us @boutiquecannabiscanada 👀"
-	guestWhatWednesdayPost.comment = "\n•\n•\n•\n•\n•\n#guesswhatwednesday #bud #buds #giveaway #giveaways #follow #like #love #highlife #canadian #cannabis #dispensary #dabs #rosin #weed #weedporn #cannabiscommunity #pot #cloudsovercanada #710society #420 #710 #stonernation #hightimes #ganja #bakedinbc #terps #thc #710life"
-	guestWhatWednesdayPost.scheduledTime = '2017-08-23 01:29:45'
-
-	giveawayPost = Post("28 gram giveaway")
-	giveawayPost.image = '28GramGiveaway.jpg'
-	giveawayPost.caption = 	"28 GRAM GIVEAWAY 🍯 💎 ❤️\nONLY 300 CONTESTANTS SO FAR! EVERY POST IS A NEW CHANCE TO WIN!\nCOMING UP ON AUGUST 28TH #28gOnThe28th\nPRIZE 👉 14g Shatter 🍯🐝 and 14g CBD Crystalline 💎💎 👇  CONTEST RULES (MUST complete all three )👇\n1️⃣. FOLLOW @boutiquecannabiscanada 👀 \n2️⃣. REPOST this picture, make sure to tag us \n3️⃣. LIKE & COMMENT below, tag friends you'd smoke with 💨\nMore friends you tag, the better your chances of winning 😀\nDM us anything to repost, we love original content 👌\nWith ❤️ from @boutiquecannabiscanada 👀"
-	giveawayPost.comment = 	"\n•\n•\n•\n•\n•\n#cbd #shatter #cbdcrystalline #giveaway #giveaways #follow #like #love #highlife #canadian #cannabis #dispensary #dabs #rosin #weed #weedporn #cannabiscommunity #pot #cloudsovercanada #710society #420 #710 #stonernation #hightimes #ganja #bakedinbc #terps #thc #710life"
-	# giveawayPost.scheduledTime = '2017-08-22 12:18:00' # format: '2017-08-19 20:16:40'
-
-	budzForBreastsPost = Post("Budz for breasts")
-	budzForBreastsPost.image = 'BudzForBreasts.jpg'
-	budzForBreastsPost.caption = "September 2nd at @theplanetparadise is going to be an amazing evening 🎀 thank you to everyone who's contributing ❤️ @boutiquecannabiscanada 👀"
-	budzForBreastsPost.comment = "\n•\n•\n•\n•\n•\n#weedconvention #fundraiser #fuckcancer #cancer #highlife #canadian #cannabis #dispensary #dabs #chronnoisseurschoice #rosin #weed #weedporn #cannabiscommunity #pot #cloudsovercanada #710society #bud #budtenders #420 #710 #iloveweed #weedstagram #stonernation #hightimes #ganja #bakedinbc #maryjane #buds #giveaway"
-	# budzForBreastsPost.scheduledTime = '2017-08-23 01:03:30'
-
-	firstGirlPost = Post("First girl post")
-	firstGirlPost.image = 'girl1.jpg'
-	firstGirlPost.caption = "👯Two is always better than one 😉 \nCanada's most alluring women, Boutique Cannabis Girls. \nCheck out: @boutiquecannabiscanada 👀 @boutiquecannabisofficial \nBoutique Cannabis girl: @kwbabyy \nShooter: @jasegraphics\nMUA: @swankmakeup"
-	firstGirlPost.comment = "\n•\n•\n•\n•\n•\n#boutiquecannabis #boutiquecannabisgirls #girls #model #girlswhosmokeweed #weedgirls #girlswithtattoos #cute #picoftheday #beautiful #photooftheday #instagood #fun #smile #pretty #follow #hot #instagramers #potd #eyes #beauty #fit #girlswholift #girlswhosquat #fitness #instafit #canadianbabes #canadiangirls #sexy #booty"
-	# firstGirlPost.scheduledTime = '2017-08-20 13:30:30'
-
-	genericPost = Post("generic")
-	genericPost.comment = "\n•\n•\n•\n•\n•\n#highlife #canadian #cannabis #dispensary #dabs #chronnoisseurschoice #rosin #weed #weedporn #cannabiscommunity #pot #cloudsovercanada #710society #bud #budtenders #420 #710 #iloveweed #weedstagram #stonernation #hightimes #ganja #bakedinbc #terps #thc #710life #maryjane #buds #shatter #420girls"
-	# genericPost.scheduledTime = '2017-08-20 23:53:00'
-
-	# drone = InstaDrone()
-	# drone.login()
-	# drone.post(budzForBreastsPost)
-	# drone.commentPost(budzForBreastsPost)
-	# drone.halt()
+	sched = BlockingScheduler()
+	createPosts()
 
 	for post in posts:
 		if post.scheduledTime != None:
 			print('Scheduling: ' + post.title + ' for time: ' + post.scheduledTime)
 			sched.add_job(autopost, 'date', run_date=post.scheduledTime, kwargs={'post': post})
+		else:
+			drone = InstaDrone()
+			drone.login()
+			drone.post(post)
+			drone.halt()
 
 	sched.start()
